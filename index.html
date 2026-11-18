@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow">
+  <title>KakoBuy spreadsheet | CAFANS Finds &amp; Shipping Budget</title>
+  <meta name="description" content="Browse real CAFANS product listings in this independent KakoBuy spreadsheet. Filter by category, save a shortlist, and estimate your delivered cost in USD.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KakoBuy spreadsheet | CAFANS Finds">
+  <meta property="og:description" content="Compare CAFANS listings, save your favorite finds, and estimate your shopping budget before ordering.">
+  <meta name="theme-color" content="#142b23">
+  <!-- Deployment: publish as index.html, then inspect the live URL and request
+       indexing in Google Search Console and submit the URL in Bing Webmaster
+       Tools. Submission is pending a published URL and verified site access. -->
+  <!-- Research references: spreadsheetkakobuy.com uses category browsing and
+       spreadsheet-kakobuy.com covers delivered costs. This page combines actual
+       CAFANS detail links with a local shortlist, CSV export, and an editable
+       delivered-cost estimate. Product source: https://cafans.com/ -->
+  <style>
+    :root{color-scheme:light;--ink:#142b23;--muted:#50605a;--paper:#f5f5ed;--white:#fff;--line:#d7dfd6;--lime:#d9efad;--green:#25513d}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 system-ui,sans-serif}
+    a{color:var(--green);text-underline-offset:.2em}
+    button,input,select{font:inherit}
+    button,a,input,select,summary{-webkit-tap-highlight-color:transparent}
+    :focus-visible{outline:3px solid #67852f;outline-offset:4px}
+    .wrap{width:min(70rem,calc(100% - 2rem));margin-inline:auto}
+    .mast{border-bottom:1px solid var(--line)}
+    .mast .wrap,.section-head,.actions{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+    .mast .wrap{padding-block:1rem}
+    nav{display:flex;flex-wrap:wrap;gap:.35rem 1rem}
+    .brand{font-weight:800;letter-spacing:.08em}
+    .hero{background:var(--ink);color:var(--white);text-align:center;padding:clamp(3rem,9vw,7rem) 0}
+    .hero h1{font-size:clamp(2.5rem,8vw,6rem);letter-spacing:-.065em;line-height:1.02;margin:0}
+    .hero p{max-width:37rem;margin:1.25rem auto 1.5rem;color:#e0ebdf}
+    .actions{justify-content:center}
+    .button{display:inline-block;min-height:2.75rem;border:1px solid var(--green);border-radius:.55rem;padding:.55rem .9rem;color:var(--ink);background:var(--white);text-decoration:none;font-weight:700;cursor:pointer}
+    .button.primary{background:var(--lime);border-color:var(--lime)}
+    .button.secondary{background:transparent;color:var(--white);border-color:#a2b8a9}
+    .button[aria-pressed="true"]{background:var(--lime)}
+    section{padding-block:2.7rem;border-bottom:1px solid var(--line);scroll-margin-top:1rem}
+    h2{font-size:clamp(1.65rem,4vw,2.75rem);line-height:1.1;margin:0 0 .6rem;letter-spacing:-.04em}
+    h3{line-height:1.25;margin:.3rem 0}
+    p{margin:.6rem 0}
+    .muted{color:var(--muted)}
+    .controls{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-top:1.2rem}
+    label{display:block;font-weight:650}
+    input:not([type="checkbox"]),select{display:block;width:100%;margin-top:.3rem;padding:.55rem .65rem;border:1px solid #85978d;border-radius:.45rem;background:white;color:var(--ink)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:1rem}
+    .card{display:flex;flex-direction:column;align-items:flex-start;background:var(--white);border:1px solid var(--line);border-radius:.85rem;padding:1.15rem}
+    .card[hidden], [hidden]{display:none}
+    .card footer{display:flex;width:100%;align-items:center;justify-content:space-between;gap:.65rem;margin-top:auto;padding-top:1rem}
+    .card small{color:var(--muted)}
+    .price{font-size:1.35rem;font-weight:800;font-variant-numeric:tabular-nums}
+    .catalog-links{display:flex;flex-wrap:wrap;gap:.4rem 1rem;margin-top:1.25rem}
+    .budget{padding:1.2rem;border-radius:.85rem;background:#e6eddf;margin-top:1rem}
+    .budget-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:1rem}
+    output{display:block;font-size:1.45rem;font-weight:800;margin-top:1rem}
+    details{padding:.8rem 0;border-bottom:1px solid var(--line)}
+    summary{font-weight:700;cursor:pointer}
+    .site-footer{padding:1.5rem 0;color:var(--muted)}
+    @media (max-width:34rem){.controls{grid-template-columns:1fr}.card footer{flex-wrap:wrap}}
+  </style>
+<link rel="canonical" href="https://kakobuyfinds.github.io/fvwny/">
+</head>
+<body>
+  <header class="mast">
+    <div class="wrap">
+      <a class="brand" href="#top">KAKOBUY FINDS</a>
+      <nav aria-label="Main navigation">
+        <a href="#catalog">Catalog</a>
+        <a href="#budget">Shipping budget</a>
+        <a href="#guide">Buying guide</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
+    <div class="hero">
+      <div class="wrap">
+        <h1>KakoBuy spreadsheet</h1>
+        <p>Compare shoes, clothing and streetwear from CAFANS. Save your picks, check the original listings, and work out what your order could cost to deliver.</p>
+        <div class="actions">
+          <a class="button primary" href="https://cafans.com/">KakoBuy spreadsheet</a>
+          <a class="button secondary" href="https://cafans.com/">Buy it now</a>
+        </div>
+      </div>
+    </div>
+
+    <section id="catalog" class="wrap" aria-labelledby="catalog-title">
+      <div class="section-head">
+        <h2 id="catalog-title">CAFANS product catalog</h2>
+        <button class="button" type="button" id="export" hidden>Download shortlist CSV</button>
+      </div>
+      <p class="muted">Selected listings from the CAFANS homepage. Reference prices are in USD. Open a product to check its current price, options and availability.</p>
+      <div id="filters" hidden>
+        <div class="controls">
+          <label for="search">Search the catalog<input id="search" type="search" placeholder="e.g. slides or sweatshirt"></label>
+          <label for="category">Category
+            <select id="category">
+              <option value="">All categories</option>
+              <option>Shoes</option>
+              <option>Hoodies &amp; sweatshirts</option>
+              <option>T-shirts</option>
+              <option>Jackets</option>
+            </select>
+          </label>
+        </div>
+        <p><label><input id="saved-only" type="checkbox"> Show saved items only</label></p>
+        <p id="results" class="muted" role="status"></p>
+      </div>
+
+      <div class="grid" id="products">
+        <article class="card" data-id="158791" data-category="Shoes" data-price="62.36">
+          <small>Shoes</small>
+          <h3>Leather Slides</h3>
+          <p class="price">$62.36</p>
+          <footer><a href="https://cafans.com/goods-158791.html">View Leather Slides</a><button class="button save" type="button" aria-label="Save Leather Slides" aria-pressed="false" hidden>Save</button></footer>
+        </article>
+        <article class="card" data-id="158790" data-category="Shoes" data-price="46.67">
+          <small>Shoes</small>
+          <h3>Platform Slides</h3>
+          <p class="price">$46.67</p>
+          <footer><a href="https://cafans.com/goods-158790.html">View Platform Slides</a><button class="button save" type="button" aria-label="Save Platform Slides" aria-pressed="false" hidden>Save</button></footer>
+        </article>
+        <article class="card" data-id="158792" data-category="Hoodies &amp; sweatshirts" data-price="27.50">
+          <small>Hoodies &amp; sweatshirts</small>
+          <h3>Sweatshirt</h3>
+          <p class="price">$27.50</p>
+          <footer><a href="https://cafans.com/goods-158792.html">View Sweatshirt</a><button class="button save" type="button" aria-label="Save Sweatshirt" aria-pressed="false" hidden>Save</button></footer>
+        </article>
+        <article class="card" data-id="158200" data-category="T-shirts" data-price="32.64">
+          <small>T-shirts</small>
+          <h3>Unisex Embroidered Oversized T-Shirt</h3>
+          <p class="price">$32.64</p>
+          <footer><a href="https://cafans.com/goods-158200.html">View Embroidered T-Shirt</a><button class="button save" type="button" aria-label="Save Unisex Embroidered Oversized T-Shirt" aria-pressed="false" hidden>Save</button></footer>
+        </article>
+        <article class="card" data-id="158110" data-category="T-shirts" data-price="29.72">
+          <small>T-shirts</small>
+          <h3>Unisex T-Shirt</h3>
+          <p class="price">$29.72</p>
+          <footer><a href="https://cafans.com/goods-158110.html">View Unisex T-Shirt</a><button class="button save" type="button" aria-label="Save Unisex T-Shirt" aria-pressed="false" hidden>Save</button></footer>
+        </article>
+        <article class="card" data-id="158158" data-category="Jackets" data-price="27.50">
+          <small>Jackets</small>
+          <h3>Jacket 0608260</h3>
+          <p class="price">$27.50</p>
+          <footer><a href="https://cafans.com/goods-158158.html">View Jacket 0608260</a><button class="button save" type="button" aria-label="Save Jacket 0608260" aria-pressed="false" hidden>Save</button></footer>
+        </article>
+      </div>
+      <nav class="catalog-links" aria-label="Browse more CAFANS products">
+        <a href="https://cafans.com/search-911.html">All shoes</a>
+        <a href="https://cafans.com/search-912.html">All hoodies and sweaters</a>
+        <a href="https://cafans.com/search-913.html">All T-shirts</a>
+        <a href="https://cafans.com/search-914.html">All jackets</a>
+      </nav>
+    </section>
+
+    <section id="budget" class="wrap" aria-labelledby="budget-title">
+      <h2 id="budget-title">Estimate your delivered cost</h2>
+      <p>Enter the amounts quoted for your destination in USD. Compare shipping lines for the same parcel, since packed dimensions and billable weight can change the quote.</p>
+      <p class="muted">Add the item subtotal, domestic delivery and agent fees, international shipping, and any estimated taxes or duties.</p>
+      <div class="budget" id="calculator" hidden>
+        <button type="button" class="button" id="use-shortlist" disabled>Use saved item subtotal</button>
+        <div class="budget-fields">
+          <label for="subtotal">Items (USD)<input id="subtotal" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></label>
+          <label for="domestic">Domestic delivery and fees<input id="domestic" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></label>
+          <label for="shipping">International shipping<input id="shipping" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></label>
+          <label for="duties">Taxes and duties<input id="duties" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></label>
+        </div>
+        <output id="total" for="subtotal domestic shipping duties" aria-live="polite">Estimated total $0.00 USD</output>
+      </div>
+    </section>
+
+    <section id="guide" class="wrap" aria-labelledby="guide-title">
+      <h2 id="guide-title">From a spreadsheet row to an order</h2>
+      <ol>
+        <li>Open the CAFANS detail page and confirm the variant, current price and availability. Save your chosen size or color alongside the product link in your exported shortlist.</li>
+        <li>Check the shopping-agent options on the product page. If you use the original marketplace URL, confirm the item and variant in KakoBuy before placing the order.</li>
+        <li>If warehouse QC photos are available, check the color, labels and measurements against your selected variant while there is still time to ask about a return or exchange.</li>
+        <li>Get a shipping quote using the packed dimensions and destination. Check what the quote includes before adding taxes, duties or service fees to your budget.</li>
+      </ol>
+    </section>
+
+    <section id="faq" class="wrap" aria-labelledby="faq-title">
+      <h2 id="faq-title">KakoBuy spreadsheet FAQ</h2>
+      <details>
+        <summary>What is a KakoBuy spreadsheet?</summary>
+        <p>It is a browsable list of product listings that shoppers can compare before choosing an agent. This independent guide uses CAFANS listings and links each entry to its CAFANS detail page.</p>
+      </details>
+      <details>
+        <summary>Does the displayed price include shipping?</summary>
+        <p>The prices in the catalog are item estimates. Check the current seller price and use your agent's domestic delivery, fee and international shipping quotes to estimate the full cost.</p>
+      </details>
+      <details>
+        <summary>Where can I check sizes and QC photos?</summary>
+        <p>Check the seller listing for a size chart. For items received at a warehouse, check the QC photos and request measurements through your shopping agent if that service is available.</p>
+      </details>
+      <details>
+        <summary>Can I use the shortlist in Google Sheets or Excel?</summary>
+        <p>Save the products you want, download the CSV, and import it into your spreadsheet app. The export includes product names, categories, reference USD prices and CAFANS links.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap">
+    Independent shopping guide. Product detail pages and reference prices are sourced from <a href="https://cafans.com/">CAFANS</a>.
+  </footer>
+
+  <script>
+    (() => {
+      const cards = [...document.querySelectorAll(".card")];
+      const storageKey = "kakobuy-cafans-shortlist";
+      const search = document.querySelector("#search");
+      const category = document.querySelector("#category");
+      const savedOnly = document.querySelector("#saved-only");
+      const results = document.querySelector("#results");
+      const exportButton = document.querySelector("#export");
+      const useShortlist = document.querySelector("#use-shortlist");
+      const subtotal = document.querySelector("#subtotal");
+      const total = document.querySelector("#total");
+      const fields = [...document.querySelectorAll(".budget-fields input")];
+      const usd = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"});
+      let saved = new Set();
+
+      try {
+        const stored = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        if (Array.isArray(stored)) saved = new Set(stored);
+      } catch {
+        // Keep the shortlist in memory when browser storage is unavailable.
+      }
+
+      function savedCards() {
+        return cards.filter(card => saved.has(card.dataset.id));
+      }
+
+      function renderCatalog() {
+        const query = search.value.trim().toLowerCase();
+        let visible = 0;
+        for (const card of cards) {
+          const name = card.querySelector("h3").textContent;
+          const isSaved = saved.has(card.dataset.id);
+          const matchesSearch = `${name} ${card.dataset.category}`.toLowerCase().includes(query);
+          const matchesCategory = !category.value || category.value === card.dataset.category;
+          card.hidden = !matchesSearch || !matchesCategory || (savedOnly.checked && !isSaved);
+          if (!card.hidden) visible += 1;
+
+          const button = card.querySelector(".save");
+          button.textContent = isSaved ? "Saved" : "Save";
+          button.setAttribute("aria-pressed", String(isSaved));
+        }
+        const savedCount = savedCards().length;
+        results.textContent = `${visible} of ${cards.length} listings · ${savedCount} saved`;
+        exportButton.disabled = savedCount === 0;
+        useShortlist.disabled = savedCount === 0;
+      }
+
+      function updateTotal() {
+        if (fields.some(field => !field.validity.valid)) {
+          total.textContent = "Enter non-negative amounts with up to two decimal places.";
+          return;
+        }
+        const cents = fields.reduce((sum, field) => sum + Math.round((field.valueAsNumber || 0) * 100), 0);
+        total.textContent = `Estimated total ${usd.format(cents / 100)} USD`;
+      }
+
+      for (const card of cards) {
+        const button = card.querySelector(".save");
+        button.hidden = false;
+        button.addEventListener("click", () => {
+          const id = card.dataset.id;
+          if (saved.has(id)) saved.delete(id);
+          else saved.add(id);
+
+          try {
+            localStorage.setItem(storageKey, JSON.stringify([...saved]));
+          } catch {
+            // Saving and export still work for the current page session.
+          }
+
+          renderCatalog();
+          if (card.hidden) savedOnly.focus();
+        });
+      }
+
+      search.addEventListener("input", renderCatalog);
+      category.addEventListener("change", renderCatalog);
+      savedOnly.addEventListener("change", renderCatalog);
+      for (const field of fields) field.addEventListener("input", updateTotal);
+
+      useShortlist.addEventListener("click", () => {
+        const cents = savedCards().reduce((sum, card) => sum + Math.round(Number(card.dataset.price) * 100), 0);
+        subtotal.value = (cents / 100).toFixed(2);
+        updateTotal();
+      });
+
+      exportButton.addEventListener("click", () => {
+        const rows = [["Product", "Category", "Reference price (USD)", "CAFANS product URL"]];
+        for (const card of savedCards()) {
+          rows.push([
+            card.querySelector("h3").textContent,
+            card.dataset.category,
+            card.dataset.price,
+            card.querySelector("a").href
+          ]);
+        }
+        const csv = rows.map(row => row.map(cell => `"${cell.replaceAll('"', '""')}"`).join(",")).join("\r\n");
+        const url = URL.createObjectURL(new Blob([csv], {type: "text/csv;charset=utf-8"}));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "kakobuy-shortlist.csv";
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      });
+
+      renderCatalog();
+      document.querySelector("#filters").hidden = false;
+      document.querySelector("#calculator").hidden = false;
+      exportButton.hidden = false;
+    })();
+  </script>
+</body>
+</html>
